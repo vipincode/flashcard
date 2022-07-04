@@ -16,8 +16,14 @@ app.set('view engine', 'pug');
 app.get('/', (req, res) => {
   res.render('index');
 });
-app.get('/hello', (req, res) => {
-  res.send('<h1>Hello javascript developer</h1>');
+app.get('/cards', (req, res) => {
+  res.render('card', {
+    prompt: "Who is burried in grunt's tomb?",
+    hint: 'Think about who is tomb it is?',
+  });
+  //  OR
+  // res.locals.prompt = "Who is burried in grunt's tomb?";
+  // res.render('card'); card is pug name see in views folder
 });
 
 // Lets detup development server
