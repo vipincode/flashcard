@@ -3,12 +3,9 @@ const express = require('express');
 
 const app = express();
 
-const colors = ['red', 'green', 'orange', 'blue', 'purple'];
-
 app.set('view engine', 'pug');
 
 // Routes
-
 app.get('/', (req, res) => {
   res.render('index');
 });
@@ -16,7 +13,6 @@ app.get('/cards', (req, res) => {
   res.render('card', {
     prompt: "Who is burried in grunt's tomb?",
     hint: 'Think about who is tomb it is?',
-    colors,
   });
 });
 
