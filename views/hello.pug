@@ -1,0 +1,10 @@
+extends layout
+
+block content 
+  if name
+    h2 Welcome, #{name}! 
+  else
+    form(action='/hello', method='post')
+      label(for="name") Please enter your name: 
+      input(type="text", id='name' name='username') 
+      button(type="submit") Submit
