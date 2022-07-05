@@ -15,21 +15,15 @@ app.set('view engine', 'pug');
 
 // MIDDLEWARE
 // This middleware run every time a request comes into the app.
+// Allow us to to gethoring computed data and send back to the clients.
 // ex: refresh browser you see `one` is log in console[see terminal]
-app.use(
-  (req, res, next) => {
-    console.log('One');
-    next();
-  },
-  // This middleware run betwen first and secont bcs middleware order to run in which they are written
-  (req, res, next) => {
-    console.log('One and Half');
-    next();
-  }
-);
+app.use((req, res, next) => {
+  req.message = 'This message made it!';
+  next();
+});
 
 app.use((req, res, next) => {
-  console.log('Two');
+  console.log(req.message);
   next();
 });
 
