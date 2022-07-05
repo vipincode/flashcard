@@ -1,32 +1,53 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 
 const app = express();
 
 // LET USE BODY PARSER
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// USER COOKIE PARSER
+app.use(cookieParser());
+
 // USE PUF TEMPLATE
 app.set('view engine', 'pug');
 
 // ROUTES
 app.get('/', (req, res) => {
-  res.render('index');
+  const name = req.cookies.username;
+  if (name) {
+    res.render('index', { name });
+  } else {
+    res.redirect('/hello');
+  }
 });
+
 app.get('/cards', (req, res) => {
   res.render('card', {
     prompt: "Who is burried in grunt's tomb?",
     hint: 'Think about who is tomb it is?',
   });
 });
+
 app.get('/hello', (req, res) => {
-  res.render('hello');
+  const name = req.cookies.username;
+  if (name) {
+    res.redirect('/');
+  } else {
+    res.render('hello');
+  }
 });
 
 app.post('/hello', (req, res) => {
-  // console.dir(req.body);
-  res.render('hello', { name: req.body.username });
-  // res.json(req.body);
+  // COOKIE REMEMBER USER NAME
+  res.cookie('username', req.body.username);
+  res.redirect('/');
+});
+
+app.post('/goodbye', (req, res) => {
+  res.clearCookie('username');
+  res.redirect('/hello');
 });
 
 // SERVER LISTENING
