@@ -13,6 +13,26 @@ app.use(cookieParser());
 // USE PUF TEMPLATE
 app.set('view engine', 'pug');
 
+// MIDDLEWARE
+// This middleware run every time a request comes into the app.
+// ex: refresh browser you see `one` is log in console[see terminal]
+app.use(
+  (req, res, next) => {
+    console.log('One');
+    next();
+  },
+  // This middleware run betwen first and secont bcs middleware order to run in which they are written
+  (req, res, next) => {
+    console.log('One and Half');
+    next();
+  }
+);
+
+app.use((req, res, next) => {
+  console.log('Two');
+  next();
+});
+
 // ROUTES
 app.get('/', (req, res) => {
   const name = req.cookies.username;
